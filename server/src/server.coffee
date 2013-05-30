@@ -37,12 +37,25 @@ app.get "/meterLights/:count", (req, res) ->
 
 app.get "/strobe", (req, res) ->
   board.strobeLights 5000
-  res.end 'done'  
+  res.end 'done'
 
 app.get "/runway", (req, res) ->
   board.runwayLights()
-  res.end 'done'  
+  res.end 'done'
+
+app.get "/load/:id", (req, res) ->
+  board.load parseInt(req.params.id || 0)
+  res.end 'done'
+
+app.get "/fire/:id", (req, res) ->
+  board.fire parseInt(req.params.id || 0)
+  res.end 'done'
+
+app.get "/clear/:id", (req, res) ->
+  board.clear parseInt(req.params.id || 0)
+  res.end 'done'
 
 board.on 'ready', ->
+  board.runwayLights()
   http.createServer(app).listen app.get("port"), ->
     console.log "Express server listening on port " + app.get("port")

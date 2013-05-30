@@ -1,16 +1,32 @@
 five = require "johnny-five"
 EventEmitter = require("events").EventEmitter
 _ = require 'lodash'
+Servo = require './servo'
 
 module.exports = (->
 
   class MissileBoard extends EventEmitter
+    ledPins: [13, 12, 11, 9, 8, 7, 6, 4]
 
     constructor: ->
       @board = new five.Board()
 
       @board.on "ready", =>
-        @leds = (new five.Led(i) for i in [12..5])
+        @leds = (new five.Led(i) for i in @ledPins)
+
+        @servos = (new Servo(
+          reversed: i == 1
+          pin: i
+          range: [ 0, 180 ] # Default: 0-180
+          type: "continuous" # Default: "standard". Use "continuous" for continuous rotation servos
+          startAt: (i * 180) # if you would like the servo to immediately move to a degree
+          center: false # overrides startAt if true and moves the servo to the center of the range
+        ) for i in [3, 5])
+
+        @servoLeds = [_.first(@leds, 4), _.last(@leds, 4)]
+
+        # _.invoke(@servos, 'min')
+
         this.emit('ready')
        
     strobeLights: (ms = 10000) ->
@@ -68,6 +84,21 @@ module.exports = (->
 
       console.log 'stopping motor'
       motor.stop()
+
+    load: (deviceNumber) ->
+      servo = @servos[deviceNumber]
+      servo.load()
+      @_onOff @servoLeds[deviceNumber][servo.loaded], 1000
+
+    fire: (deviceNumber) ->
+      servo = @servos[deviceNumber]
+      servo.fire()
+      @_onOff @servoLeds[deviceNumber][servo.loaded], 1000
+
+    clear: (deviceNumber) ->
+      servo = @servos[deviceNumber]
+      servo.clear()
+      @_onOff @servoLeds[deviceNumber][servo.loaded], 1000      
 
     _onOff: (led, duration) ->
       led.on()
