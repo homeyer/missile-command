@@ -24,8 +24,7 @@ app.get "/", (req, res) ->
     res.render 'index'
 
 app.get "/board", (req, res) ->
-    board.on 'ready', -> this.strobeLights(5000)
+    board.on 'ready', -> this.motorize(5000)
 
 http.createServer(app).listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")
-

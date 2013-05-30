@@ -24,5 +24,20 @@ module.exports = (->
           console.log 'Stopping LED'
           led.stop().off()
 
+    motorize: (ms = 5000) ->
+      motor = new five.Motor(
+        pin: 3
+      )
+
+      motor.on "start", (err, timestamp) ->
+          console.log( "motor started", timestamp )
+
+          # Demonstrate motor stop in 2 seconds
+          @board.wait ms, ->
+            console.log "stopping motor"
+            motor.stop()
+
+      motor.start()
+
   new MissileBoard()
 )()
