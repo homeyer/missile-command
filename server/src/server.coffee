@@ -21,10 +21,16 @@ app.use express.static(path.join(__dirname, "public"))
 app.use express.errorHandler()  if "development" is app.get("env")
 
 app.get "/", (req, res) ->
-    res.render 'index'
+  res.render 'index'
 
-app.get "/board", (req, res) ->
-    board.on 'ready', -> this.motorize(5000)
+app.get "/motor", (req, res) ->
+  board.motorize 5000
+  res.end 'done'  
 
-http.createServer(app).listen app.get("port"), ->
-  console.log "Express server listening on port " + app.get("port")
+app.get "/strobe", (req, res) ->
+  board.strobeLights 5000
+  res.end 'done'  
+
+board.on 'ready', ->
+  http.createServer(app).listen app.get("port"), ->
+    console.log "Express server listening on port " + app.get("port")
