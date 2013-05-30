@@ -10,7 +10,7 @@ module.exports = (grunt) ->
         watch:
             server:
                 files: 'server/src/**/*.coffee'
-                tasks: ['coffee:src']
+                tasks: ['coffee:server']
 
 
         coffee:
