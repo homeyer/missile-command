@@ -4,7 +4,9 @@
   "description": "NodeBots Missile Command",
   "main": "server.js",
   "dependencies": {
-    "johnny-five": "~0.6.2"
+    "johnny-five": "~0.6.2",
+    "express": "3.x",
+    "jade": "*"
   },
   "devDependencies": {
     "grunt": "0.4.0",
