@@ -19,12 +19,20 @@ module.exports = (->
           reversed: (i == @reversedServoPin)
           pin: i
           range: [ 0, 180 ] # Default: 0-180
-          type: "continuous" # Default: "standard". Use "continuous" for continuous rotation servos
+          type: "standard" # Default: "standard". Use "continuous" for continuous rotation servos
           startAt: ((i == @reversedServoPin && 1) * 180) # if you would like the servo to immediately move to a degree
           center: false # overrides startAt if true and moves the servo to the center of the range
         ) for i in [5, 3])
 
         @servoLeds = [_.first(@leds, 3), _.last(@leds, 3)]
+
+        @tilter = new five.Servo(
+          pin: 10
+          range: [ 0, 180 ] # Default: 0-180
+          type: "standard" # Default: "standard". Use "continuous" for continuous rotation servos
+          startAt: 5 # if you would like the servo to immediately move to a degree
+          center: false # overrides startAt if true and moves the servo to the center of the range
+        )
 
         # @buzzer = new five.Piezo(10)
 
@@ -103,6 +111,9 @@ module.exports = (->
       servo = @servos[deviceNumber]
       servo.clear()
       _.invoke(@servoLeds[deviceNumber], 'off')
+
+    tilt: (degrees) ->
+      @tilter?.move degrees
 
     _onOff: (led, duration) ->
       led.on()

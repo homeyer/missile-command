@@ -55,6 +55,10 @@ app.get "/clear/:id", (req, res) ->
   board.clear parseInt(req.params.id || 0)
   res.end 'done'
 
+app.get "/tilt/:degrees", (req, res) ->
+  board.tilt parseInt(req.params.degrees || 0)
+  res.end 'done'
+
 board.on 'ready', ->
   board.runwayLights()
   http.createServer(app).listen app.get("port"), ->
