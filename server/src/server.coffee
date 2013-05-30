@@ -1,1 +1,3 @@
-require './strobe'
+board = require './board'
+
+board.start()
