@@ -7,6 +7,7 @@ module.exports = (->
 
   class MissileBoard extends EventEmitter
     ledPins: [13, 12, 11, 9, 8, 7, 6, 4]
+    reversedServoPin: 5
 
     constructor: ->
       @board = new five.Board()
@@ -15,13 +16,13 @@ module.exports = (->
         @leds = (new five.Led(i) for i in @ledPins)
 
         @servos = (new Servo(
-          reversed: i == 1
+          reversed: (i == @reversedServoPin)
           pin: i
           range: [ 0, 180 ] # Default: 0-180
           type: "continuous" # Default: "standard". Use "continuous" for continuous rotation servos
-          startAt: (i * 180) # if you would like the servo to immediately move to a degree
+          startAt: ((i == @reversedServoPin && 1) * 180) # if you would like the servo to immediately move to a degree
           center: false # overrides startAt if true and moves the servo to the center of the range
-        ) for i in [3, 5])
+        ) for i in [5, 3])
 
         @servoLeds = [_.first(@leds, 4), _.last(@leds, 4)]
 
