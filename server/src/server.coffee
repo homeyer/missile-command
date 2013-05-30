@@ -1,3 +1,3 @@
 board = require './board'
 
-board.start()
+board.on 'ready', -> this.strobeLights(5000)
