@@ -6,7 +6,7 @@ Servo = require './servo'
 module.exports = (->
 
   class MissileBoard extends EventEmitter
-    ledPins: [13, 12, 11, 9, 8, 7, 6, 4]
+    ledPins: [12, 11, 9, 8, 7, 6]
     reversedServoPin: 5
 
     constructor: ->
@@ -24,9 +24,9 @@ module.exports = (->
           center: false # overrides startAt if true and moves the servo to the center of the range
         ) for i in [5, 3])
 
-        @servoLeds = [_.first(@leds, 4), _.last(@leds, 4)]
+        @servoLeds = [_.first(@leds, 3), _.last(@leds, 3)]
 
-        # _.invoke(@servos, 'min')
+        # @buzzer = new five.Piezo(10)
 
         this.emit('ready')
        
@@ -88,18 +88,21 @@ module.exports = (->
 
     load: (deviceNumber) ->
       servo = @servos[deviceNumber]
+      led = @servoLeds[deviceNumber][servo.loaded]
+      led?.on()
       servo.load()
-      @_onOff @servoLeds[deviceNumber][servo.loaded], 1000
 
     fire: (deviceNumber) ->
       servo = @servos[deviceNumber]
+      # @buzzer.tone( 20, 200 )
       servo.fire()
-      @_onOff @servoLeds[deviceNumber][servo.loaded], 1000
+      led = @servoLeds[deviceNumber][servo.loaded]
+      led.off()
 
     clear: (deviceNumber) ->
       servo = @servos[deviceNumber]
       servo.clear()
-      @_onOff @servoLeds[deviceNumber][servo.loaded], 1000      
+      _.invoke(@servoLeds[deviceNumber], 'off')
 
     _onOff: (led, duration) ->
       led.on()
