@@ -1,3 +1,4 @@
+[![Stories in Ready](http://badge.waffle.io/kmanzana/missile-command.png)](http://waffle.io/kmanzana/missile-command)  
 NodeBots Missile Command
 ===============
 
