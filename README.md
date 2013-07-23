@@ -1,8 +1,5 @@
-
 NodeBots Missile Command
 ===============
-
-[![Stories in Ready](http://badge.waffle.io/homeyer/missile-command.png)](http://waffle.io/homeyer/missile-command)
 
 Our mission is simple. Let no nodecopter survive.
 
