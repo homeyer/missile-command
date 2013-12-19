@@ -1,8 +1,3 @@
-[![Stories in Ready](https://badge.waffle.io/homeyer/missile-command.png?label=ready)](https://waffle.io/homeyer/missile-command)  
-[![Stories in Ready](https://badge.waffle.io/homeyer/missile-command.png)](https://waffle.io/homeyer/missile-command)  
-[![Stories in Ready](https://badge.waffle.io/homeyer/missile-command.png)](https://waffle.io/homeyer/missile-command)  
-[![Stories in Ready](https://badge.waffle.io/homeyer/missile-command.png)](http://waffle.io/homeyer/missile-command)  
-[![Stories in Ready](http://badge.waffle.io/kmanzana/missile-command.png)](http://waffle.io/kmanzana/missile-command)  
 NodeBots Missile Command
 ===============
 
